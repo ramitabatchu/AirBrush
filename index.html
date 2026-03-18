@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AirBrush</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- MediaPipe Hands -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- Zone 1: Toolbar -->
+    <header class="toolbar">
+      <div class="logo">AirBrush</div>
+
+      <div class="color-palette" id="color-palette">
+        <!-- Colors will be generated via JS -->
+      </div>
+
+      <div class="brush-sizes" id="brush-sizes">
+        <button class="size-btn" data-size="5" title="Small"></button>
+        <button class="size-btn active" data-size="10" title="Medium"></button>
+        <button class="size-btn" data-size="20" title="Large"></button>
+      </div>
+
+      <div class="actions">
+        <button class="action-btn" id="eraser-btn" title="Eraser">Eraser</button>
+        <button class="action-btn" id="undo-btn" title="Undo (Cmd/Ctrl+Z)" disabled>Undo</button>
+        <button class="action-btn" id="redo-btn" title="Redo (Cmd/Ctrl+Shift+Z)" disabled>Redo</button>
+        <button class="action-btn" id="clear-btn" title="Clear Canvas">Clear</button>
+        <button class="action-btn primary" id="save-btn" title="Save as PNG">Save</button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Zone 2: Camera Panel -->
+      <aside class="camera-panel">
+        <div class="camera-wrapper">
+          <video id="input_video" class="input_video" autoplay playsinline></video>
+          <canvas class="output_canvas" id="output_canvas"></canvas>
+        </div>
+        <div class="gesture-state" id="gesture-state">Initializing...</div>
+      </aside>
+
+      <!-- Zone 3: Drawing Canvas -->
+      <div class="canvas-container" id="canvas-container">
+        <canvas id="drawing-canvas"></canvas>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

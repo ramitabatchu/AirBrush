@@ -1,0 +1,253 @@
+/* Styling for a premium, modern web application */
+:root {
+  --bg-color: #0f172a;
+  --panel-bg: #1e293b;
+  --toolbar-bg: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --border-color: #334155;
+  --canvas-bg: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  height: 100vh;
+  overflow: hidden;
+  /* No scrolling */
+  display: flex;
+  flex-direction: column;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+/* Zone 1: Toolbar */
+.toolbar {
+  height: 64px;
+  background-color: var(--toolbar-bg);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  flex-shrink: 0;
+}
+
+.logo {
+  font-size: 1.50rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  background: #a8e6ff;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.color-palette {
+  display: flex;
+  gap: 8px;
+}
+
+.color-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
+}
+
+.color-swatch.active {
+  border-color: var(--text-primary);
+  transform: scale(1.15);
+}
+
+.brush-sizes {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.size-btn {
+  background: var(--border-color);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.size-btn[data-size="5"] {
+  width: 12px;
+  height: 12px;
+}
+
+.size-btn[data-size="10"] {
+  width: 16px;
+  height: 16px;
+}
+
+.size-btn[data-size="20"] {
+  width: 24px;
+  height: 24px;
+}
+
+.size-btn:hover {
+  background: var(--text-secondary);
+  transform: scale(1.1);
+}
+
+.size-btn.active {
+  background: var(--text-primary);
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.action-btn {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-btn:hover:not(:disabled) {
+  background-color: var(--border-color);
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action-btn.active {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.action-btn.primary {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.action-btn.primary:hover {
+  background-color: var(--accent-hover);
+}
+
+/* Main Content Area */
+.main-content {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 64px);
+}
+
+/* Zone 2: Camera Panel */
+.camera-panel {
+  width: 280px;
+  background-color: var(--panel-bg);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.camera-wrapper {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background-color: #000;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.input_video {
+  display: none;
+  /* Hide native video, draw it to canvas if needed, or overlay MediaPipe */
+}
+
+/* MediaPipe draws everything onto output_canvas. We mirror it via transform. */
+.output_canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+  /* Mirror camera feed */
+}
+
+.gesture-state {
+  text-align: center;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.gesture-state.drawing {
+  color: #4ade80;
+  /* Green */
+}
+
+.gesture-state.paused {
+  color: #ffec60ff;
+  /* Yellow */
+}
+
+.gesture-state.eraser {
+  color: #326be4ff;
+  /* Blue */
+}
+
+.gesture-state.error {
+  color: #f87171;
+  /* Red */
+}
+
+/* Zone 3: Drawing Canvas */
+.canvas-container {
+  flex: 1;
+  background-color: var(--bg-color);
+  /* Matches app bg or could be slightly lighter */
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#drawing-canvas {
+  background-color: var(--canvas-bg);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  cursor: crosshair;
+  touch-action: none;
+}
